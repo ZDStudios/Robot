@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            animation: blink 3s infinite;
+        }
+
+        .eye {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background-color: gray;
+            border-radius: 50%;
+            animation: moveEyes 2s infinite alternate;
+        }
+
+        @keyframes blink {
+            50% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        @keyframes moveEyes {
+            0%, 100% {
+                left: 20px;
+            }
+            50% {
+                left: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="robot" id="robot">
+        <div class="eye" id="eye1"></div>
+        <div class="eye" id="eye2"></div>
+    </div>
+
+    <script>
+        function getRandomPosition() {
+            return Math.floor(Math.random() * 40) + 20 + 'px';
+        }
+
+        function moveEyesRandomly() {
+            setInterval(() => {
+                document.getElementById('eye1').style.left = getRandomPosition();
+                document.getElementById('eye2').style.left = getRandomPosition();
+            }, 3000);
+        }
+
+        function playGame() {
+            const games = ['Space Invaders', 'Ping Pong', 'Jumping'];
+            const selectedGame = games[Math.floor(Math.random() * games.length)];
+            console.log(`Playing ${selectedGame}!`);
+        }
+
+        moveEyesRandomly();
+
+        // Play a game every 25 minutes (adjust the time interval as needed).
+        setInterval(playGame, 25 * 60 * 1000);
+    </script>
+</body>
+</html>
