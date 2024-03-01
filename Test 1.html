@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            animation: blink 3s infinite;
+        }
+
+        .eye {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background-color: gray;
+            border-radius: 50%;
+            top: 40px;
+            left: 20px;
+        }
+
+        .smile {
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            border: 2px solid gray;
+            border-bottom-left-radius: 80px;
+            border-bottom-right-radius: 80px;
+            top: 80px;
+            left: 50px;
+        }
+
+        @keyframes blink {
+            50% {
+                transform: scaleY(0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="robot">
+        <div class="eye"></div>
+        <div class="eye" style="left: 120px;"></div>
+        <div class="smile"></div>
+    </div>
+</body>
+</html>
