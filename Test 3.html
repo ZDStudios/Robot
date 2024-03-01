@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            animation: blink 3s infinite;
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .eye {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background-color: gray;
+            border-radius: 50%;
+            animation: moveEyesUpDown 3s infinite alternate;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        @keyframes blink {
+            50% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        @keyframes moveEyesUpDown {
+            0%, 100% {
+                top: 20px;
+            }
+            50% {
+                top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="robot" id="robot" onclick="askQuestion()">
+        <div class="eye" id="eye1" onmouseover="increaseSize(this)" onmouseout="resetSize(this)"></div>
+        <div class="eye" id="eye2" onmouseover="increaseSize(this)" onmouseout="resetSize(this)"></div>
+    </div>
+
+    <script>
+        function getRandomVerticalPosition() {
+            return Math.floor(Math.random() * 40) + 20 + 'px';
+        }
+
+        function moveEyesUpDownRandomly() {
+            setInterval(() => {
+                document.getElementById('eye1').style.top = getRandomVerticalPosition();
+                document.getElementById('eye2').style.top = getRandomVerticalPosition();
+            }, 4000);
+        }
+
+        function askQuestion() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            
+            recognition.onresult = function(event) {
+                const question = event.results[0][0].transcript.trim();
+                const response = getAIResponse(question);
+                alert(response);
+
+                // Simulate eye movement change based on the question
+                if (question.toLowerCase().includes('how are you')) {
+                    moveEyesUpDownRandomly();
+                }
+            };
+
+            recognition.start();
+        }
+
+        function getAIResponse(question) {
+            // This is a simple example. In a real application, you would use a more sophisticated AI.
+            const responses = {
+                'hello': 'Hello there!',
+                'how are you': 'I am a robot, I do not have feelings, but thank you for asking!',
+                'what is your name': 'I am a virtual assistant.',
+                'tell me a joke': 'Why did the robot go to therapy? To work on its emotional circuits!'
+            };
+
+            return responses[question.toLowerCase()] || 'I do not understand your question.';
+        }
+
+        function increaseSize(element) {
+            element.style.transform = 'scale(1.2)';
+        }
+
+        function resetSize(element) {
+            element.style.transform = 'scale(1)';
+        }
+
+        moveEyesUpDownRandomly();
+    </script>
+</body>
+</html>
